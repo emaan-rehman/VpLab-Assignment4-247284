@@ -1,0 +1,178 @@
+﻿@page "/todo"
+@rendermode InteractiveServer
+@inject VpLabAssignment.Data.AppDbContext DbContext
+@using Microsoft.EntityFrameworkCore
+
+<PageTitle>To-Do List - Application 08 (Database Connected)</PageTitle>
+
+<div class="container mt-5" style="max-width: 550px;">
+    <div class="premium-card p-4 md-p-5 shadow-lg position-relative overflow-hidden">
+
+        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3" style="border-color: var(--glass-border) !important;">
+            <div>
+                <h3 class="gradient-header m-0 tracking-tight fw-extrabold">Task Tracker</h3>
+                <span class="brand-subtitle text-uppercase tracking-wider">Application 08 Engine</span>
+            </div>
+            <span class="telemetry-badge tracking-wider">
+                Active Items: @tasks.Count
+            </span>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label text-muted small fw-bold text-uppercase tracking-wider">Register New Task</label>
+            <div class="input-group">
+                <input type="text"
+                       class="form-control form-premium text-main"
+                       placeholder="Enter system task parameters..."
+                       @bind="newTask"
+                       @bind:event="oninput"
+                       @onkeypress="HandleKeyPress" />
+                <button class="btn btn-premium-primary ms-2 d-flex align-items-center"
+                        type="button"
+                        @onclick="AddTaskAsync"
+                        disabled="@string.IsNullOrWhiteSpace(newTask)">
+                    Add Item
+                </button>
+            </div>
+        </div>
+
+        <div class="task-list-wrapper">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="m-0 text-muted small fw-bold text-uppercase tracking-wider">Telemetry Monitoring</h6>
+                @if (tasks.Count > 0)
+                {
+                    <button class="btn btn-premium-danger btn-sm px-3 py-1 text-uppercase tracking-wider"
+                            style="font-size: 0.75rem; border-radius: 6px;"
+                            @onclick="ClearAllTasksAsync">
+                        Clear All Tasks
+                    </button>
+                }
+            </div>
+
+            <ul class="list-group list-group-flush" style="border-radius: 12px; overflow: hidden; padding-left: 0;">
+                @if (tasks.Count == 0)
+                {
+                    <li class="list-group-item text-center py-5 bg-indigo-soft text-indigo" style="border: 1px dashed #6366f1; border-radius: 12px; list-style: none;">
+                        <div class="mb-2"><i class="bi bi-clipboard-check fs-3"></i></div>
+                        <span class="fw-semibold small text-uppercase tracking-wider">No active pipeline configurations found.</span>
+                    </li>
+                }
+                else
+                {
+                    @foreach (var task in tasks)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-3 py-3 mb-2 shadow-sm premium-card @(task.IsCompleted ? "bg-light opacity-75" : "bg-white")"
+                            style="border-radius: 10px; border-left: 4px solid @(task.IsCompleted ? "#64748b" : "#6366f1"); list-style: none;">
+
+                            <div class="d-flex align-items-center gap-2" style="cursor: pointer;" @onclick="() => ToggleTaskStatusAsync(task)">
+                                <span class="avatar-circle text-white @(task.IsCompleted ? "bg-secondary" : "bg-indigo")"
+                                      style="width: 24px; height: 24px; font-size: 0.75rem; font-weight: bold; display: flex; align-items: center; justify-content: center; border-radius: 50%;">
+                                    @(task.IsCompleted ? "✓" : "•")
+                                </span>
+                                <span class="text-main fw-medium @(task.IsCompleted ? "text-decoration-line-through text-muted" : "")">
+                                    @task.Title
+                                </span>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-3">
+                                <button class="btn btn-sm px-2 py-1 text-uppercase font-monospace fw-bold transition"
+                                        style="font-size: 0.65rem; border-radius: 6px; border: 1px solid @(task.IsCompleted ? "#64748b" : "#6366f1"); background: @(task.IsCompleted ? "rgba(100,116,139,0.1)" : "rgba(99,102,241,0.1)"); color: @(task.IsCompleted ? "#64748b" : "#6366f1");"
+                                        @onclick="() => ToggleTaskStatusAsync(task)"
+                                        @onclick:stopPropagation="true">
+                                    @(task.IsCompleted ? "Mark Pending" : "Mark Complete")
+                                </button>
+
+                                <button class="btn btn-sm text-danger fw-bold border-0 p-0 tracking-wider text-uppercase"
+                                        style="font-size: 0.75rem; background: transparent;"
+                                        @onclick="() => RemoveTaskAsync(task)"
+                                        @onclick:stopPropagation="true">
+                                    Terminate
+                                </button>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
+        <div class="pt-3 border-top mt-4 d-flex justify-content-between align-items-center text-muted small" style="border-color: var(--glass-border) !important;">
+            <span>Relational Row State Counter Matrix:</span>
+            <span class="fw-bold text-indigo font-monospace">@tasks?.Count(t => t.IsCompleted)/@tasks?.Count Completed</span>
+        </div>
+
+    </div>
+</div>
+
+@code {
+    private string newTask = string.Empty;
+
+    // Dynamic list holding data models extracted directly from local SQL instance
+    private List<VpLabAssignment.Data.TodoTask> tasks = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDatabaseRecordsAsync();
+    }
+
+    // 1. READ OPERATION: Fetch all table rows sequentially sorted by timestamp
+    private async Task LoadDatabaseRecordsAsync()
+    {
+        tasks = await DbContext.TodoTasks.OrderBy(t => t.CreatedAt).ToListAsync();
+    }
+
+    // 2. CREATE OPERATION: Inserts new input entries directly into local database tables
+    private async Task AddTaskAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(newTask))
+        {
+            var dbEntry = new VpLabAssignment.Data.TodoTask
+            {
+                Title = newTask.Trim(),
+                IsCompleted = false,
+                CreatedAt = DateTime.Now
+            };
+
+            DbContext.TodoTasks.Add(dbEntry);
+            await DbContext.SaveChangesAsync(); // Commit insertion to database
+
+            newTask = string.Empty;
+            await LoadDatabaseRecordsAsync(); // Instantly update view tracking indicators
+        }
+    }
+
+    // 3. UPDATE OPERATION: Modifies true/false completion records inside SQL rows
+    private async Task ToggleTaskStatusAsync(VpLabAssignment.Data.TodoTask taskInstance)
+    {
+        taskInstance.IsCompleted = !taskInstance.IsCompleted;
+        DbContext.TodoTasks.Update(taskInstance);
+        await DbContext.SaveChangesAsync(); // Commit update state modifications to tables
+        await LoadDatabaseRecordsAsync();
+    }
+
+    // 4. DELETE OPERATION: Removes targeted data instances out of database identities completely
+    private async Task RemoveTaskAsync(VpLabAssignment.Data.TodoTask taskToRemove)
+    {
+        DbContext.TodoTasks.Remove(taskToRemove);
+        await DbContext.SaveChangesAsync(); // Delete the target row record from database
+        await LoadDatabaseRecordsAsync();
+    }
+
+    // 5. BULK DELETE OPERATION: Truncates or clears all stored entities out of the tables dataset
+    private async Task ClearAllTasksAsync()
+    {
+        if (tasks.Any())
+        {
+            DbContext.TodoTasks.RemoveRange(DbContext.TodoTasks);
+            await DbContext.SaveChangesAsync(); // Clear all data records from table catalog
+            await LoadDatabaseRecordsAsync();
+        }
+    }
+
+    private void HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(newTask))
+        {
+            InvokeAsync(AddTaskAsync);
+        }
+    }
+}

@@ -1,30 +1,47 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Application08</a>
+﻿@rendermode InteractiveServer
+
+<div class="premium-sidebar d-flex flex-column h-100 p-4" style="background: #0f172a; min-height: 100vh;">
+    <div class="brand-container d-flex align-items-center gap-3 mb-4 pb-3" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <div class="brand-logo-wrapper position-relative">
+            <i class="bi bi-cpu text-info fs-3"></i>
+        </div>
+        <div class="brand-text-block">
+            <h5 class="m-0 text-white fw-bold tracking-wider" style="font-size: 1.1rem;">LAB PORTAL</h5>
+            <span class="text-muted font-monospace d-block" style="font-size: 0.65rem;">CORE SYSTEM ENGINE V4.0</span>
+        </div>
+    </div>
+
+    <div class="nav-links-wrapper flex-grow-1 d-flex flex-column gap-2">
+        <NavLink class="nav-item-link px-3 py-2.5 rounded-3 text-decoration-none d-flex align-items-center gap-3 text-white opacity-75" href="" Match="NavLinkMatch.All">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span class="link-text fw-medium small">Portal Dashboard Home</span>
+        </NavLink>
+
+        <NavLink class="nav-item-link px-3 py-2.5 rounded-3 text-decoration-none d-flex align-items-center gap-3 text-white opacity-75" href="todo">
+            <i class="bi bi-shield-lock-fill text-success"></i>
+            <span class="link-text fw-medium small">ToDo</span>
+            <span class="badge bg-success-subtle text-success ms-auto" style="font-size: 0.65rem; border-radius: 6px;">App 08</span>
+        </NavLink>
+    </div>
+
+    <div class="sidebar-footer pt-3 mt-auto" style="border-top: 1px solid rgba(255,255,255,0.1);">
+        <div class="d-flex align-items-center gap-3">
+            <div class="avatar-circle rounded-circle d-flex align-items-center justify-content-center text-white bg-secondary bg-opacity-20" style="width: 36px; height: 36px;">
+                <i class="bi bi-person-fill"></i>
+            </div>
+            <div class="overflow-hidden">
+                <p class="m-0 text-white fw-semibold small text-truncate">Emaan Rehman</p>
+                <small class="text-muted d-block font-monospace" style="font-size: 0.65rem;">ID: 247284-AU</small>
+            </div>
+        </div>
     </div>
 </div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
+<style>
+    .nav-item-link:hover, .nav-item-link.active {
+        background: rgba(255, 255, 255, 0.08) !important;
+        opacity: 1 !important;
+        color: #38bdf8 !important;
+        transition: all 0.2s ease-in-out;
+    }
+</style>
