@@ -1,0 +1,75 @@
+﻿@page "/login"
+@rendermode InteractiveServer
+@inject AuthenticationStateService AuthState
+@implements IDisposable
+
+<PageTitle>Login Gate - Application 05</PageTitle>
+
+<div class="container mt-5" style="max-width: 500px;">
+    <div class="premium-card p-4 shadow-lg text-center">
+
+        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3" style="border-color: var(--glass-border) !important;">
+            <div class="text-start">
+                <h3 class="gradient-header m-0 fw-extrabold tracking-tight">System Access</h3>
+                <span class="brand-subtitle text-uppercase tracking-wider">Authentication Control</span>
+            </div>
+            <span class="telemetry-badge">
+                @(AuthState.IsAuthenticated ? "Secure" : "Locked")
+            </span>
+        </div>
+
+        @if (!AuthState.IsAuthenticated)
+        {
+            <div class="text-start mb-4">
+                <label class="form-label text-muted small fw-bold text-uppercase tracking-wider">Username</label>
+                <input type="text" class="form-control form-premium text-main" placeholder="Enter your name..." @bind="inputUsername" />
+            </div>
+
+            <button class="btn btn-premium-primary w-100 py-2 text-uppercase tracking-wider"
+                    @onclick="HandleLogin"
+                    disabled="@string.IsNullOrWhiteSpace(inputUsername)">
+                Sign In
+            </button>
+        }
+        else
+        {
+            <div class="p-3 bg-indigo-soft text-indigo rounded-3 mb-4">
+                <p class="mb-1 text-muted small text-uppercase fw-bold">Active Identity</p>
+                <h5 class="fw-bold m-0 text-main">@AuthState.Username</h5>
+            </div>
+
+            <button class="btn btn-premium-danger w-100 py-2 text-uppercase tracking-wider" @onclick="HandleLogout">
+                Sign Out / Disconnect
+            </button>
+        }
+
+    </div>
+</div>
+
+@code {
+    private string inputUsername = string.Empty;
+
+    private void HandleLogin()
+    {
+        if (!string.IsNullOrWhiteSpace(inputUsername))
+        {
+            AuthState.LogIn(inputUsername);
+            inputUsername = string.Empty; // Reset local state field
+        }
+    }
+
+    private void HandleLogout()
+    {
+        AuthState.LogOut();
+    }
+
+    protected override void OnInitialized()
+    {
+        AuthState.OnStateChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        AuthState.OnStateChanged -= StateHasChanged;
+    }
+}

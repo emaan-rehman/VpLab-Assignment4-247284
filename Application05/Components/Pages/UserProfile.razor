@@ -1,0 +1,58 @@
+﻿@page "/profile"
+@rendermode InteractiveServer
+@inject AuthenticationStateService AuthState
+@implements IDisposable
+
+<PageTitle>User Profile - Application 05</PageTitle>
+
+<div class="container mt-5" style="max-width: 500px;">
+    <div class="premium-card p-4 shadow-lg text-center">
+
+        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3" style="border-color: var(--glass-border) !important;">
+            <div class="text-start">
+                <h3 class="gradient-header m-0 fw-extrabold tracking-tight">User Dashboard</h3>
+                <span class="brand-subtitle text-uppercase tracking-wider">Profile Information</span>
+            </div>
+            <div class="avatar-circle text-indigo-light bg-indigo fw-bold" style="width: 35px; height: 35px;">
+                @(AuthState.IsAuthenticated ? AuthState.Username.Substring(0, 1).ToUpper() : "?")
+            </div>
+        </div>
+
+        @if (AuthState.IsAuthenticated)
+        {
+            <div class="p-4 bg-indigo-soft text-indigo rounded-3 border mb-3" style="border-color: rgba(99, 102, 241, 0.2) !important;">
+                <h2 class="fw-extrabold mb-1 text-indigo">Welcome Back, @AuthState.Username!</h2>
+                <p class="text-muted small m-0">You have successfully authenticated via our Shared State Service.</p>
+            </div>
+
+            <a href="/login" class="btn btn-outline-secondary btn-sm tracking-wider text-uppercase w-100 py-2">
+                Manage Authorization
+            </a>
+        }
+        else
+        {
+            <div class="p-4 rounded-3 border mb-4 text-muted bg-light" style="border-style: dashed !important; border-width: 2px !important;">
+                <h5 class="fw-bold text-secondary mb-2">Anonymous User Profile</h5>
+                <p class="small mb-0">Please sign in to access your secure information data pipeline.</p>
+            </div>
+
+            <a href="/login" class="btn btn-premium-primary w-100 py-2 text-uppercase tracking-wider">
+                Go to Sign In
+            </a>
+        }
+
+    </div>
+</div>
+
+@code {
+    // Bind change listener logic to re-render component instantly when state shifts across components
+    protected override void OnInitialized()
+    {
+        AuthState.OnStateChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        AuthState.OnStateChanged -= StateHasChanged;
+    }
+}
