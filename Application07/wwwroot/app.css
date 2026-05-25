@@ -118,14 +118,27 @@ body {
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
-/* Telemetry Badge Styles */
+/* Telemetry Badge Styles - Default Light Mode */
 .telemetry-badge {
-    background: #e0f2fe;
-    color: #0369a1;
+    background: #e0f2fe !important;
+    color: #0369a1 !important;
     padding: 0.35rem 0.75rem;
     border-radius: 9999px;
     font-size: 0.85rem;
     font-weight: 700;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* FIX: Dark Mode Badge Overrides */
+[data-theme="dark"] .telemetry-badge {
+    background: rgba(6, 182, 212, 0.15) !important;
+    color: #06b6d4 !important;
+    border: 1px solid rgba(6, 182, 212, 0.3) !important;
+}
+
+/* Ensure the layout wrapper container centers content nicely */
+.container {
+    transition: all 0.3s ease;
 }
 
 /* Palette Extenders */
