@@ -1,0 +1,86 @@
+﻿@page "/counter"
+@rendermode InteractiveServer
+
+<PageTitle>Telemetry Counter - Application 04</PageTitle>
+
+<div class="container mt-5" style="max-width: 550px;">
+    <div class="premium-card p-4 md-p-5 shadow-lg position-relative overflow-hidden">
+
+        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3" style="border-color: var(--glass-border) !important;">
+            <div>
+                <h3 class="gradient-header m-0 tracking-tight fw-extrabold">Metrics Counter</h3>
+                <span class="brand-subtitle text-uppercase tracking-wider">Application 04 Engine</span>
+            </div>
+            <span class="telemetry-badge tracking-wider">
+                Status: Operational
+            </span>
+        </div>
+
+        <div class="p-4 mb-4 text-center bg-indigo-soft text-indigo shadow-sm" style="border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.2);">
+            <p class="text-uppercase tracking-wider small fw-bold text-muted m-0">Current Telemetry Pulse Count</p>
+            <h1 class="display-3 fw-extrabold my-2 gradient-header" style="background: var(--secondary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                @clickCount
+            </h1>
+            <span class="badge bg-indigo rounded-pill px-3 py-1 tracking-wider text-uppercase" style="font-size: 0.7rem;">
+                One-Way Render Pipeline Active
+            </span>
+        </div>
+
+        <div class="mb-4 text-center">
+            <button class="btn btn-premium-primary btn-lg w-100 py-3 tracking-wider text-uppercase" @onclick="IncrementCounter">
+                Pulse System Increment (+1)
+            </button>
+        </div>
+
+        <div class="p-3" style="background: rgba(15, 23, 42, 0.03); border-radius: 12px; border: 1px solid var(--glass-border);">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                    <label class="form-label text-muted small fw-bold text-uppercase tracking-wider m-0">
+                        Manual Metric Override
+                    </label>
+                    <p class="text-muted small m-0" style="font-size: 0.75rem;">Adjust system value via two-way binding link</p>
+                </div>
+                <div class="col-md-5">
+                    <input type="number"
+                           class="form-control form-premium text-main text-center fw-bold"
+                           style="font-size: 1.1rem;"
+                           @bind="clickCount"
+                           @bind:event="oninput" />
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-outline-secondary btn-sm w-50 py-2 tracking-wider text-uppercase" style="font-size: 0.75rem; border-radius: 8px;" @onclick="ResetCounter">
+                Reset Value
+            </button>
+            <button class="btn btn-premium-danger btn-sm w-50 py-2 tracking-wider text-uppercase" style="font-size: 0.75rem; border-radius: 8px;" @onclick="MultiplyCounter">
+                Amplify Core (x2)
+            </button>
+        </div>
+
+    </div>
+</div>
+
+@code {
+    // Shared Central Core State Matrix Variable
+    private int clickCount = 0;
+
+    // Direct Compliance: Event handler linked to @onclick to alter system states
+    private void IncrementCounter()
+    {
+        clickCount++;
+    }
+
+    // Secondary Modifier: Resets telemetry index cleanly
+    private void ResetCounter()
+    {
+        clickCount = 0;
+    }
+
+    // Secondary Modifier: Mathematics manipulation check logic
+    private void MultiplyCounter()
+    {
+        clickCount *= 2;
+    }
+}
