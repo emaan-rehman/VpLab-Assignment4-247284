@@ -1,0 +1,90 @@
+﻿@page "/todo"
+@rendermode InteractiveServer
+
+<PageTitle>To-Do List - Application 03</PageTitle>
+
+<div class="container mt-5" style="max-width: 500px;">
+    <h3 class="text-center mb-4 text-primary">Task Tracker (Application 03)</h3>
+
+    <div class="input-group mb-3">
+        <input type="text"
+               class="form-control"
+               placeholder="Enter a new task..."
+               @bind="newTask"
+               @bind:event="oninput"
+               @onkeypress="HandleKeyPress" />
+        <button class="btn btn-primary" type="button" @onclick="AddTask" disabled="@string.IsNullOrWhiteSpace(newTask)">
+            Add Item
+        </button>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Total Tasks: @tasks.Count</span>
+        @if (tasks.Count > 0)
+        {
+            <button class="btn btn-outline-danger btn-sm" @onclick="ClearAllTasks">
+                Clear All Tasks
+            </button>
+        }
+    </div>
+
+    <ul class="list-group shadow-sm">
+        @if (tasks.Count == 0)
+        {
+            <li class="list-group-item text-center text-muted py-4">
+                No tasks available. Add some items to get started!
+            </li>
+        }
+        else
+        {
+            @foreach (var task in tasks)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>@task</span>
+                    <button class="btn btn-sm btn-link text-danger p-0" @onclick="() => RemoveTask(task)">
+                        Remove
+                    </button>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+@code {
+    // Variable tied via TWO-WAY binding to capture input data strings
+    private string newTask = string.Empty;
+
+    // Local collection managing items displayed via ONE-WAY binding evaluation loops
+    private List<string> tasks = new List<string>();
+
+    // Adds item to the list and resets the bounded text storage
+    private void AddTask()
+    {
+        if (!string.IsNullOrWhiteSpace(newTask))
+        {
+            tasks.Add(newTask.Trim());
+            newTask = string.Empty; // Resets input instantly via two-way connection feedback
+        }
+    }
+
+    // Allows the user to press 'Enter' on their keyboard to submit tasks quickly
+    private void HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            AddTask();
+        }
+    }
+
+    // Individual item target clearance execution
+    private void RemoveTask(string taskToRemove)
+    {
+        tasks.Remove(taskToRemove);
+    }
+
+    // Requirement: Implemented logic to wipe clear the list completely
+    private void ClearAllTasks()
+    {
+        tasks.Clear();
+    }
+}
