@@ -57,7 +57,7 @@
 
                         <h3 class="fw-light m-0">
                             Welcome back, <span class="fw-bold text-info text-decoration-underline" style="text-underline-offset: 6px;">
-                            @(string.IsNullOrWhiteSpace(studentProfileName) ? "Honored System Guest" : studentProfileName)
+                            @(string.IsNullOrWhiteSpace(studentProfileName) ? "System Guest" : studentProfileName)
                         </span>!
                     </h3>
                     <p class="text-muted small m-0 mt-2">
@@ -70,8 +70,6 @@
     </div>
 </div>
 </div>
-
 @code {
-    // The underlying data field representing the source of truth
     private string studentProfileName { get; set; } = string.Empty;
 }
