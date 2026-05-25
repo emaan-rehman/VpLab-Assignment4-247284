@@ -7,4 +7,14 @@
     <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Application02\Application02.csproj" />
+    <ProjectReference Include="..\Application03\Application03.csproj" />
+    <ProjectReference Include="..\Application04\Application04.csproj" />
+    <ProjectReference Include="..\Application05\Application05.csproj" />
+    <ProjectReference Include="..\Application06\Application06.csproj" />
+    <ProjectReference Include="..\Application07\Application07.csproj" />
+    <ProjectReference Include="..\Application08\Application08.csproj" />
+  </ItemGroup>
+
 </Project>
