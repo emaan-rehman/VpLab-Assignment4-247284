@@ -109,13 +109,13 @@
 
     public class ProfileModel
     {
-        [Required(ErrorMessage = "Operational system access requires a validated First Name.")]
+        [Required(ErrorMessage = " First Name Required.")]
         public string FirstName { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Operational system access requires a validated Last Name.")]
+        [Required(ErrorMessage = "Last Name Required.")]
         public string LastName { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "An active verification email address anchor token is required.")]
+        [Required(ErrorMessage = "An active verification email address required.")]
         [EmailAddress(ErrorMessage = "The layout structure specified does not adhere to valid email formatting patterns.")]
         public string Email { get; set; } = string.Empty;
     }
