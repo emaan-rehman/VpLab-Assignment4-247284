@@ -11,29 +11,32 @@
         <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3" style="border-color: var(--glass-border) !important;">
             <div class="text-start">
                 <h3 class="gradient-header m-0 fw-extrabold tracking-tight">User Dashboard</h3>
-                <span class="brand-subtitle text-uppercase tracking-wider">Profile Information</span>
+                <span class="brand-subtitle text-uppercase tracking-wider">Profile Status</span>
             </div>
-            <div class="avatar-circle text-indigo-light bg-indigo fw-bold" style="width: 35px; height: 35px;">
-                @(AuthState.IsAuthenticated ? AuthState.Username.Substring(0, 1).ToUpper() : "?")
+
+            <div class="avatar-circle text-indigo-light bg-indigo fw-bold" style="width: 38px; height: 38px; font-size: 1.1rem;">
+                @(AuthState.IsAuthenticated && !string.IsNullOrEmpty(AuthState.Username)
+                    ? AuthState.Username.Trim().Substring(0, 1).ToUpper()
+                    : "?")
             </div>
         </div>
 
         @if (AuthState.IsAuthenticated)
         {
-            <div class="p-4 bg-indigo-soft text-indigo rounded-3 border mb-3" style="border-color: rgba(99, 102, 241, 0.2) !important;">
-                <h2 class="fw-extrabold mb-1 text-indigo">Welcome Back, @AuthState.Username!</h2>
-                <p class="text-muted small m-0">You have successfully authenticated via our Shared State Service.</p>
+            <div class="p-4 bg-indigo-soft text-indigo rounded-3 border text-start mb-4" style="border-color: rgba(99, 102, 241, 0.2) !important;">
+                <h3 class="fw-extrabold mb-2 text-indigo">Welcome Back, @AuthState.Username!</h3>
+                <p class="text-muted small mb-0">Your profile metrics are synchronized via the centralized multi-component singleton layer.</p>
             </div>
 
-            <a href="/login" class="btn btn-outline-secondary btn-sm tracking-wider text-uppercase w-100 py-2">
-                Manage Authorization
-            </a>
+            <button class="btn btn-premium-danger w-100 py-2 text-uppercase tracking-wider" @onclick="ForceLogout">
+                Terminate Active Session
+            </button>
         }
         else
         {
-            <div class="p-4 rounded-3 border mb-4 text-muted bg-light" style="border-style: dashed !important; border-width: 2px !important;">
-                <h5 class="fw-bold text-secondary mb-2">Anonymous User Profile</h5>
-                <p class="small mb-0">Please sign in to access your secure information data pipeline.</p>
+            <div class="p-4 rounded-3 border mb-4 text-muted bg-light" style="border-style: dashed !important; border-width: 2px !important; border-color: var(--glass-border) !important;">
+                <h5 class="fw-bold text-secondary mb-2">Access Denied</h5>
+                <p class="small mb-0">No valid credentials found in shared state memory. Please authenticate to view data metrics.</p>
             </div>
 
             <a href="/login" class="btn btn-premium-primary w-100 py-2 text-uppercase tracking-wider">
@@ -45,7 +48,12 @@
 </div>
 
 @code {
-    // Bind change listener logic to re-render component instantly when state shifts across components
+    // Logic Enhancement: Component allows full remote session destruction from anywhere
+    private void ForceLogout()
+    {
+        AuthState.LogOut();
+    }
+
     protected override void OnInitialized()
     {
         AuthState.OnStateChanged += StateHasChanged;

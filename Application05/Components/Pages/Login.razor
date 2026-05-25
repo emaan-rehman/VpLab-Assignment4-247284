@@ -14,7 +14,7 @@
                 <span class="brand-subtitle text-uppercase tracking-wider">Authentication Control</span>
             </div>
             <span class="telemetry-badge">
-                @(AuthState.IsAuthenticated ? "Secure" : "Locked")
+                @(AuthState.IsAuthenticated ? "Authorized" : "Locked")
             </span>
         </div>
 
@@ -22,7 +22,17 @@
         {
             <div class="text-start mb-4">
                 <label class="form-label text-muted small fw-bold text-uppercase tracking-wider">Username</label>
-                <input type="text" class="form-control form-premium text-main" placeholder="Enter your name..." @bind="inputUsername" />
+                <input type="text"
+                       class="form-control form-premium text-main"
+                       placeholder="Enter your name..."
+                       @bind="inputUsername"
+                       @bind:event="oninput"
+                       @onkeypress="HandleKeyPress" />
+
+                @if (string.IsNullOrWhiteSpace(inputUsername))
+                {
+                    <div class="form-text text-danger small mt-1">Username parameter cannot be empty.</div>
+                }
             </div>
 
             <button class="btn btn-premium-primary w-100 py-2 text-uppercase tracking-wider"
@@ -33,14 +43,20 @@
         }
         else
         {
-            <div class="p-3 bg-indigo-soft text-indigo rounded-3 mb-4">
-                <p class="mb-1 text-muted small text-uppercase fw-bold">Active Identity</p>
-                <h5 class="fw-bold m-0 text-main">@AuthState.Username</h5>
+            <div class="p-4 bg-indigo-soft text-indigo rounded-3 mb-4">
+                <p class="mb-1 text-muted small text-uppercase fw-bold">Active User Identity</p>
+                <h4 class="fw-extrabold m-0 text-main">@AuthState.Username</h4>
+                <div class="mt-2 text-success small">✓ Secure session pipeline established</div>
             </div>
 
-            <button class="btn btn-premium-danger w-100 py-2 text-uppercase tracking-wider" @onclick="HandleLogout">
-                Sign Out / Disconnect
-            </button>
+            <div class="d-flex gap-2">
+                <a href="/profile" class="btn btn-outline-secondary w-50 py-2 text-uppercase tracking-wider" style="font-size: 0.85rem;">
+                    Go to Dashboard
+                </a>
+                <button class="btn btn-premium-danger w-50 py-2 text-uppercase tracking-wider" style="font-size: 0.85rem;" @onclick="HandleLogout">
+                    Sign Out
+                </button>
+            </div>
         }
 
     </div>
@@ -54,13 +70,22 @@
         if (!string.IsNullOrWhiteSpace(inputUsername))
         {
             AuthState.LogIn(inputUsername);
-            inputUsername = string.Empty; // Reset local state field
+            inputUsername = string.Empty;
         }
     }
 
     private void HandleLogout()
     {
         AuthState.LogOut();
+    }
+
+    // Logic Enhancement: Key press processing logic
+    private void HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            HandleLogin();
+        }
     }
 
     protected override void OnInitialized()

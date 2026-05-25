@@ -7,7 +7,7 @@ namespace Application05
         // Maintains the user's logged-in state
         public bool IsAuthenticated { get; private set; } = false;
 
-        // Keeps track of the logged-in username
+        // Keeps track of the logged-in username securely
         public string Username { get; private set; } = string.Empty;
 
         // An event that notifies components when state changes
@@ -15,10 +15,11 @@ namespace Application05
 
         public void LogIn(string user)
         {
+            // Logic Enhancement: Prevent empty strings or spaces from breaking state rules
             if (!string.IsNullOrWhiteSpace(user))
             {
                 IsAuthenticated = true;
-                Username = user;
+                Username = user.Trim(); // Clean input data automatically
                 NotifyStateChanged();
             }
         }
