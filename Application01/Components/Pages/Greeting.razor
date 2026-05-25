@@ -1,23 +1,37 @@
 ﻿@page "/greeting"
 @rendermode InteractiveServer
 
-<PageTitle>Application 1 - Data Binding</PageTitle>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="premium-card p-5">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="gradient-header m-0">Interactive Engine Suite</h2>
+                    <span class="telemetry-badge">Application 01</span>
+                </div>
+                <p class="text-secondary mb-4">Demonstrating structural unidirectional and bidirectional reactive state models inside .NET core components[cite: 16, 17].</p>
 
-<div class="container mt-4">
-    <h3>Application 1: Interactive Greeting</h3>
-    <hr />
+                <div class="card bg-light border-0 rounded-4 p-4 mb-4">
+                    <label class="form-label fw-bold text-dark mb-2">Bidirectional Workspace Input (Two-Way Binding) [cite: 19]</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-2 border-end-0" style="border-radius: 10px 0 0 10px;"><i class="bi bi-person-fill"></i></span>
+                        <input type="text" class="form-control form-premium" style="border-radius: 0 10px 10px 0;" @bind="userName" @bind:event="oninput" placeholder="Awaiting parameter synchronization string..." />
+                    </div>
+                    <small class="text-muted mt-2"><i class="bi bi-info-circle"></i> State writes values directly down to back-end models on keydown events.</small>
+                </div>
 
-    <div class="mb-3 col-md-6">
-        <label for="nameInput" class="form-label">Enter your name:</label>
-        <input type="text" id="nameInput" class="form-control" @bind="userName" placeholder="Type a name..." />
-    </div>
-
-    <div class="alert alert-primary mt-3 col-md-6" role="alert">
-        <strong>Greeting:</strong> Hello, @(string.IsNullOrWhiteSpace(userName) ? "Guest" : userName)! Welcome to Visual Programming.
+                <div class="p-4 rounded-4 text-white" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
+                    <span class="badge bg-primary mb-2">Unidirectional Stream Output (One-Way Binding) [cite: 20]</span>
+                    <h3 class="fw-light m-0">
+                        Hello, <span class="fw-bold text-info">@(string.IsNullOrWhiteSpace(userName) ? "System Guest User" : userName)</span>! [cite: 16, 20]
+                    </h3>
+                    <p class="text-muted small mt-2 mb-0">Interface component context dynamically refreshed via the pipeline runtime environment.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 @code {
-    // The component property acting as the source of truth
     private string userName { get; set; } = string.Empty;
 }
