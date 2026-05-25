@@ -1,3 +1,4 @@
+using Application06;
 using Application06.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,7 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+// REQUIREMENT: Register configuration class as a singleton
+builder.Services.AddSingleton<NotificationConfig>();
 
+// REQUIREMENT: Register NotificationService as Transient or Scoped
+builder.Services.AddScoped<NotificationService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
