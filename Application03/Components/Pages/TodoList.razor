@@ -3,71 +3,102 @@
 
 <PageTitle>To-Do List - Application 03</PageTitle>
 
-<div class="container mt-5" style="max-width: 500px;">
-    <h3 class="text-center mb-4 text-primary">Task Tracker (Application 03)</h3>
+<div class="container mt-5" style="max-width: 550px;">
+    <div class="premium-card p-4 md-p-5 shadow-lg position-relative overflow-hidden">
 
-    <div class="input-group mb-3">
-        <input type="text"
-               class="form-control"
-               placeholder="Enter a new task..."
-               @bind="newTask"
-               @bind:event="oninput"
-               @onkeypress="HandleKeyPress" />
-        <button class="btn btn-primary" type="button" @onclick="AddTask" disabled="@string.IsNullOrWhiteSpace(newTask)">
-            Add Item
-        </button>
-    </div>
+        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3" style="border-color: var(--glass-border) !important;">
+            <div>
+                <h3 class="gradient-header m-0 tracking-tight fw-extrabold">Task Tracker</h3>
+                <span class="brand-subtitle text-uppercase tracking-wider">Application 03 Engine</span>
+            </div>
+            <span class="telemetry-badge tracking-wider">
+                Active Items: @tasks.Count
+            </span>
+        </div>
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-muted">Total Tasks: @tasks.Count</span>
-        @if (tasks.Count > 0)
-        {
-            <button class="btn btn-outline-danger btn-sm" @onclick="ClearAllTasks">
-                Clear All Tasks
-            </button>
-        }
-    </div>
+        <div class="mb-4">
+            <label class="form-label text-muted small fw-bold text-uppercase tracking-wider">Register New Task</label>
+            <div class="input-group">
+                <input type="text"
+                       class="form-control form-premium text-main"
+                       placeholder="Enter system task parameters..."
+                       @bind="newTask"
+                       @bind:event="oninput"
+                       @onkeypress="HandleKeyPress" />
+                <button class="btn btn-premium-primary ms-2 d-flex align-items-center"
+                        type="button"
+                        @onclick="AddTask"
+                        disabled="@string.IsNullOrWhiteSpace(newTask)">
+                    Add Item
+                </button>
+            </div>
+        </div>
 
-    <ul class="list-group shadow-sm">
-        @if (tasks.Count == 0)
-        {
-            <li class="list-group-item text-center text-muted py-4">
-                No tasks available. Add some items to get started!
-            </li>
-        }
-        else
-        {
-            @foreach (var task in tasks)
-            {
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>@task</span>
-                    <button class="btn btn-sm btn-link text-danger p-0" @onclick="() => RemoveTask(task)">
-                        Remove
+        <div class="task-list-wrapper">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="m-0 text-muted small fw-bold text-uppercase tracking-wider">Telemetry Monitoring</h6>
+                @if (tasks.Count > 0)
+                {
+                    <button class="btn btn-premium-danger btn-sm px-3 py-1 text-uppercase tracking-wider"
+                            style="font-size: 0.75rem; border-radius: 6px;"
+                            @onclick="ClearAllTasks">
+                        Clear All Tasks
                     </button>
-                </li>
-            }
-        }
-    </ul>
+                }
+            </div>
+
+            <ul class="list-group list-group-flush" style="border-radius: 12px; overflow: hidden;">
+                @if (tasks.Count == 0)
+                {
+                    <li class="list-group-item text-center py-5 bg-indigo-soft text-indigo" style="border: 1px dashed #6366f1; border-radius: 12px;">
+                        <div class="mb-2"><i class="bi bi-clipboard-check fs-3"></i></div>
+                        <span class="fw-semibold small text-uppercase tracking-wider">No active pipeline configurations found.</span>
+                    </li>
+                }
+                else
+                {
+                    @foreach (var task in tasks)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-3 py-3 mb-2 shadow-sm premium-card bg-white"
+                            style="border-radius: 10px; border-left: 4px solid #6366f1;">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="avatar-circle text-indigo-light bg-indigo" style="width: 24px; height: 24px; font-size: 0.75rem; font-weight: bold;">
+                                    ✓
+                                </span>
+                                <span class="text-main fw-medium">@task</span>
+                            </div>
+                            <button class="btn btn-sm text-danger fw-bold border-0 p-0 tracking-wider text-uppercase"
+                                    style="font-size: 0.75rem; background: transparent;"
+                                    @onclick="() => RemoveTask(task)">
+                                Terminate
+                            </button>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
+    </div>
 </div>
 
 @code {
-    // Variable tied via TWO-WAY binding to capture input data strings
+    // Requirements Compliance: TWO-WAY bound data capture variable
     private string newTask = string.Empty;
 
-    // Local collection managing items displayed via ONE-WAY binding evaluation loops
+    // Requirements Compliance: ONE-WAY bound rendering loop context collection
     private List<string> tasks = new List<string>();
 
-    // Adds item to the list and resets the bounded text storage
+    // Commits string payload to display array and flashes binding memory
     private void AddTask()
     {
         if (!string.IsNullOrWhiteSpace(newTask))
         {
             tasks.Add(newTask.Trim());
-            newTask = string.Empty; // Resets input instantly via two-way connection feedback
+            newTask = string.Empty; // Resets view layer state value via two-way update link
         }
     }
 
-    // Allows the user to press 'Enter' on their keyboard to submit tasks quickly
+    // Handles rapid capture when physical enter key is evaluated
     private void HandleKeyPress(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
@@ -76,13 +107,13 @@
         }
     }
 
-    // Individual item target clearance execution
+    // Drops isolated data indices from execution cycle
     private void RemoveTask(string taskToRemove)
     {
         tasks.Remove(taskToRemove);
     }
 
-    // Requirement: Implemented logic to wipe clear the list completely
+    // Requirements Compliance: Clear-all list logic hook
     private void ClearAllTasks()
     {
         tasks.Clear();
