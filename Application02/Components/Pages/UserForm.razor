@@ -1,0 +1,122 @@
+﻿@page "/userform"
+@using System.ComponentModel.DataAnnotations
+@rendermode InteractiveServer
+
+<PageTitle>Secure Gateway - Profile Registration</PageTitle>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-xl-7 col-lg-9">
+            <div class="premium-card p-5 border-0 shadow">
+
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div>
+                        <span class="text-indigo-soft fw-bold text-uppercase tracking-wider font-monospace d-block mb-1" style="font-size: 0.75rem;">
+                            Security & Credentialing Pipeline
+                        </span>
+                        <h2 class="gradient-header m-0 fw-extrabold" style="font-size: 2rem;">Profile Registration Gateway</h2>
+                    </div>
+                    <span class="telemetry-badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2">
+                        Application Module 02
+                    </span>
+                </div>
+
+                <p class="text-secondary lead fs-6 mb-4">
+                    This module utilizes explicit data annotations to evaluate input parameters before allowing record submission[cite: 24].
+                </p>
+
+                <hr class="text-muted opacity-20 mb-4" />
+
+                <EditForm Model="@registrationData" OnValidSubmit="ExecuteRegistrationPipeline" FormName="SecureUserRegistration">
+                    <DataAnnotationsValidator />
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark mb-2">Given First Name</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-2 border-end-0 px-3" style="border-radius: 12px 0 0 12px;">
+                                <i class="bi bi-person text-muted"></i>
+                            </span>
+                            <InputText class="form-control form-premium py-2" style="border-radius: 0 12px 12px 0;"
+                                       @bind-Value="registrationData.FirstName" placeholder="Enter first name..." />
+                        </div>
+                        <div class="mt-1">
+                            <ValidationMessage For="@(() => registrationData.FirstName)" class="text-danger small fw-semibold" />
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark mb-2">Family Last Name</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-2 border-end-0 px-3" style="border-radius: 12px 0 0 12px;">
+                                <i class="bi bi-person-lines-fill text-muted"></i>
+                            </span>
+                            <InputText class="form-control form-premium py-2" style="border-radius: 0 12px 12px 0;"
+                                       @bind-Value="registrationData.LastName" placeholder="Enter last name..." />
+                        </div>
+                        <div class="mt-1">
+                            <ValidationMessage For="@(() => registrationData.LastName)" class="text-danger small fw-semibold" />
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark mb-2">Communication Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-2 border-end-0 px-3" style="border-radius: 12px 0 0 12px;">
+                                <i class="bi bi-envelope-at-fill text-muted"></i>
+                            </span>
+                            <InputText class="form-control form-premium py-2" style="border-radius: 0 12px 12px 0;"
+                                       @bind-Value="registrationData.Email" placeholder="username@domain.com" />
+                        </div>
+                        <div class="mt-1">
+                            <ValidationMessage For="@(() => registrationData.Email)" class="text-danger small fw-semibold" />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-premium-primary w-100 py-3 mt-3 text-white fw-bold">
+                        <i class="bi bi-shield-lock-fill me-2"></i> Provision System Credentials
+                    </button>
+                </EditForm>
+
+                @if (showSuccessAlert)
+                {
+                    <div class="alert alert-success mt-4 border-0 rounded-4 p-4 shadow-sm animate-fade-in" role="alert">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-check-circle-fill fs-2 text-success"></i>
+                            <div>
+                                <h5 class="alert-heading fw-bold m-0 text-success">Registration Successful</h5>
+                                <p class="m-0 small text-secondary mt-1">
+                                    Welcome, <strong>@registrationData.FirstName @registrationData.LastName</strong>! Your account has been securely initialized with token identity  <em>@registrationData.Email</em>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private ProfileModel registrationData = new ProfileModel();
+    private bool showSuccessAlert = false;
+
+    private void ExecuteRegistrationPipeline()
+    {
+        // Executes only when all structural validation constraints evaluate to true
+        showSuccessAlert = true;
+    }
+
+    public class ProfileModel
+    {
+        [Required(ErrorMessage = "Operational system access requires a validated First Name.")]
+        public string FirstName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Operational system access requires a validated Last Name.")]
+        public string LastName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "An active verification email address anchor token is required.")]
+        [EmailAddress(ErrorMessage = "The layout structure specified does not adhere to valid email formatting patterns.")]
+        public string Email { get; set; } = string.Empty;
+    }
+}

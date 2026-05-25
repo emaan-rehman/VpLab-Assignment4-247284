@@ -1,30 +1,34 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Application02</a>
+﻿@rendermode InteractiveServer
+
+<div class="premium-sidebar d-flex flex-column h-100 p-4">
+    <div class="brand-container d-flex align-items-center gap-3 mb-4 pb-3 border-bottom border-secondary-subtle border-opacity-10">
+        <div class="brand-logo-wrapper">
+            <div class="logo-ambient-glow"></div>
+            <i class="bi bi-shield-check logo-icon-spin text-success"></i>
+        </div>
+        <div class="brand-text-block">
+            <h5 class="m-0 brand-title">AU PORTAL</h5>
+            <span class="brand-subtitle font-monospace">CORE ENGINE V4.0</span>
+        </div>
+    </div>
+
+    <div class="nav-links-wrapper flex-grow-1 d-flex flex-column gap-2">
+        <NavLink class="nav-item-link" href="userform">
+            <i class="bi bi-shield-lock-fill icon-left"></i>
+            <span class="link-text">Secure Registration</span>
+            <span class="badge bg-indigo ms-auto nav-pill-badge">App 02</span>
+        </NavLink>
+    </div>
+
+    <div class="sidebar-footer pt-3 mt-auto border-top border-secondary-subtle border-opacity-10">
+        <div class="d-flex align-items-center gap-3">
+            <div class="avatar-circle">
+                <i class="bi bi-person-fill text-white"></i>
+            </div>
+            <div class="overflow-hidden">
+                <p class="m-0 text-white fw-semibold small text-truncate">Emaan Rehman</p>
+                <small class="text-muted d-block font-monospace" style="font-size: 0.65rem;">ID: 247284-AU</small>
+            </div>
+        </div>
     </div>
 </div>
-
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
