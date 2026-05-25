@@ -5,7 +5,7 @@ namespace VpLabAssignment.Data
 {
     public class TodoTask
     {
-        [Key] // Configures auto-incrementing Primary Key
+        [Key] 
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Task parameters cannot be blank.")]

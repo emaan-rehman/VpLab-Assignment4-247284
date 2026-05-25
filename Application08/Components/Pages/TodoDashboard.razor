@@ -105,22 +105,15 @@
 
 @code {
     private string newTask = string.Empty;
-
-    // Dynamic list holding data models extracted directly from local SQL instance
     private List<VpLabAssignment.Data.TodoTask> tasks = new();
-
     protected override async Task OnInitializedAsync()
     {
         await LoadDatabaseRecordsAsync();
     }
-
-    // 1. READ OPERATION: Fetch all table rows sequentially sorted by timestamp
     private async Task LoadDatabaseRecordsAsync()
     {
         tasks = await DbContext.TodoTasks.OrderBy(t => t.CreatedAt).ToListAsync();
     }
-
-    // 2. CREATE OPERATION: Inserts new input entries directly into local database tables
     private async Task AddTaskAsync()
     {
         if (!string.IsNullOrWhiteSpace(newTask))
@@ -133,41 +126,33 @@
             };
 
             DbContext.TodoTasks.Add(dbEntry);
-            await DbContext.SaveChangesAsync(); // Commit insertion to database
-
+            await DbContext.SaveChangesAsync(); 
             newTask = string.Empty;
-            await LoadDatabaseRecordsAsync(); // Instantly update view tracking indicators
+            await LoadDatabaseRecordsAsync(); 
         }
     }
-
-    // 3. UPDATE OPERATION: Modifies true/false completion records inside SQL rows
     private async Task ToggleTaskStatusAsync(VpLabAssignment.Data.TodoTask taskInstance)
     {
         taskInstance.IsCompleted = !taskInstance.IsCompleted;
         DbContext.TodoTasks.Update(taskInstance);
-        await DbContext.SaveChangesAsync(); // Commit update state modifications to tables
+        await DbContext.SaveChangesAsync();
         await LoadDatabaseRecordsAsync();
     }
-
-    // 4. DELETE OPERATION: Removes targeted data instances out of database identities completely
     private async Task RemoveTaskAsync(VpLabAssignment.Data.TodoTask taskToRemove)
     {
         DbContext.TodoTasks.Remove(taskToRemove);
-        await DbContext.SaveChangesAsync(); // Delete the target row record from database
+        await DbContext.SaveChangesAsync();
         await LoadDatabaseRecordsAsync();
     }
-
-    // 5. BULK DELETE OPERATION: Truncates or clears all stored entities out of the tables dataset
     private async Task ClearAllTasksAsync()
     {
         if (tasks.Any())
         {
             DbContext.TodoTasks.RemoveRange(DbContext.TodoTasks);
-            await DbContext.SaveChangesAsync(); // Clear all data records from table catalog
+            await DbContext.SaveChangesAsync(); 
             await LoadDatabaseRecordsAsync();
         }
     }
-
     private void HandleKeyPress(KeyboardEventArgs e)
     {
         if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(newTask))
