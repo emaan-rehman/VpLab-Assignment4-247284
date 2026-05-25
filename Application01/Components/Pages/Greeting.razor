@@ -1,37 +1,77 @@
 ﻿@page "/greeting"
 @rendermode InteractiveServer
 
+<PageTitle>Personalization Hub - Data Binding</PageTitle>
+
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-lg-7">
-            <div class="premium-card p-5">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2 class="gradient-header m-0">Interactive Engine Suite</h2>
-                    <span class="telemetry-badge">Application 01</span>
-                </div>
-                <p class="text-secondary mb-4">Demonstrating structural unidirectional and bidirectional reactive state models inside .NET core components[cite: 16, 17].</p>
+        <div class="col-xl-8 col-lg-10">
+            <div class="premium-card p-5 border-0 shadow">
 
-                <div class="card bg-light border-0 rounded-4 p-4 mb-4">
-                    <label class="form-label fw-bold text-dark mb-2">Bidirectional Workspace Input (Two-Way Binding) [cite: 19]</label>
-                    <div class="input-group">
-                        <span class="input-group-text bg-white border-2 border-end-0" style="border-radius: 10px 0 0 10px;"><i class="bi bi-person-fill"></i></span>
-                        <input type="text" class="form-control form-premium" style="border-radius: 0 10px 10px 0;" @bind="userName" @bind:event="oninput" placeholder="Awaiting parameter synchronization string..." />
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div>
+                        <span class="text-indigo-soft fw-bold text-uppercase tracking-wider font-monospace d-block mb-1" style="font-size: 0.75rem;">
+                            Laboratory Core Framework
+                        </span>
+                        <h2 class="gradient-header m-0 fw-extrabold" style="font-size: 2rem;">User Personalization Portal</h2>
                     </div>
-                    <small class="text-muted mt-2"><i class="bi bi-info-circle"></i> State writes values directly down to back-end models on keydown events.</small>
+                    <span class="telemetry-badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2">
+                        Application Module 01
+                    </span>
                 </div>
 
-                <div class="p-4 rounded-4 text-white" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
-                    <span class="badge bg-primary mb-2">Unidirectional Stream Output (One-Way Binding) [cite: 20]</span>
-                    <h3 class="fw-light m-0">
-                        Hello, <span class="fw-bold text-info">@(string.IsNullOrWhiteSpace(userName) ? "System Guest User" : userName)</span>! [cite: 16, 20]
+                <p class="text-secondary lead fs-6 mb-4">
+                    This component demonstrates interactive client-side synchronization by utilizing both one-way and two-way reactive data binding methodologies.
+                </p>
+
+                <hr class="text-muted opacity-20 mb-4" />
+
+                <div class="card bg-white border border-light-subtle rounded-4 p-4 shadow-sm mb-4">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <i class="bi bi-arrow-left-right text-indigo fs-5"></i>
+                        <label class="form-label fw-bold text-dark m-0">Interactive Profile Input Name Field (Two-Way Binding)</label>
+                    </div>
+                    <p class="text-muted small mb-3">
+                        Typing into this control triggers an immediate write operation into the background C# code memory segment[cite: 19].
+                    </p>
+
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-2 border-end-0 px-3" style="border-radius: 12px 0 0 12px;">
+                            <i class="bi bi-person-fill text-muted"></i>
+                        </span>
+                        <input type="text" class="form-control form-premium py-3" style="border-radius: 0 12px 12px 0;"
+                               @bind="studentProfileName" @bind:event="oninput" placeholder="Please enter your name here..." />
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-4 text-white shadow-lg d-flex align-items-center position-relative overflow-hidden"
+                     style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); min-height: 120px;">
+                    <div class="position-absolute top-0 end-0 p-3 opacity-10" style="font-size: 5rem;">
+                        <i class="bi bi-cpu-fill"></i>
+                    </div>
+
+                    <div class="w-100 z-1">
+                        <span class="badge bg-indigo-soft text-indigo-light mb-2 font-monospace tracking-wider text-uppercase" style="font-size: 0.65rem;">
+                            Live Compiled Workspace Output (One-Way Stream)
+                        </span>
+
+                        <h3 class="fw-light m-0">
+                            Welcome back, <span class="fw-bold text-info text-decoration-underline" style="text-underline-offset: 6px;">
+                            @(string.IsNullOrWhiteSpace(studentProfileName) ? "Honored System Guest" : studentProfileName)
+                        </span>!
                     </h3>
-                    <p class="text-muted small mt-2 mb-0">Interface component context dynamically refreshed via the pipeline runtime environment.</p>
+                    <p class="text-muted small m-0 mt-2">
+                        Your active educational workspace environment is provisioned and fully initialized[cite: 20].
+                    </p>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
+</div>
 
 @code {
-    private string userName { get; set; } = string.Empty;
+    // The underlying data field representing the source of truth
+    private string studentProfileName { get; set; } = string.Empty;
 }

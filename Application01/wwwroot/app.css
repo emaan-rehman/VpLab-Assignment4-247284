@@ -91,3 +91,41 @@ body {
     font-size: 0.85rem;
     font-weight: 700;
 }
+/* Palette Extenders */
+.text-indigo {
+    color: #6366f1 !important;
+}
+
+.bg-indigo {
+    background-color: #6366f1 !important;
+}
+
+.text-indigo-light {
+    color: #c7d2fe !important;
+}
+
+.bg-indigo-soft {
+    background: rgba(99, 102, 241, 0.15) !important;
+}
+
+.fw-extrabold {
+    font-weight: 800;
+}
+
+.tracking-tight {
+    letter-spacing: -0.025em;
+}
+
+.tracking-wider {
+    letter-spacing: 0.05em;
+}
+
+.z-1 {
+    z-index: 1;
+}
+
+/* Custom Frame Override */
+.page {
+    display: grid;
+    grid-template-columns: 280px 1px flex-grow; /* Allocates exact sidebar grid boundary width */
+}

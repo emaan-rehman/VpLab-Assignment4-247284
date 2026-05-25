@@ -1,35 +1,108 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Application01</a>
+﻿@rendermode InteractiveServer
+
+<div class="premium-sidebar d-flex flex-column h-100 p-4">
+    <div class="brand-container d-flex align-items-center gap-3 mb-5 pb-3">
+        <div class="brand-icon-wrapper">
+            <i class="bi bi-shield-shaded"></i>
+        </div>
+        <div>
+            <h5 class="m-0 fw-bold tracking-tight text-white">AU Portal</h5>
+            <small class="text-indigo-soft tracking-wider text-uppercase font-monospace" style="font-size: 0.65rem;">Core Engine v4.0</small>
+        </div>
+    </div>
+
+    <div class="nav-links-wrapper flex-grow-1 d-flex flex-column gap-2">
+        <NavLink class="nav-item-link" href="" Match="NavLinkMatch.All">
+            <i class="bi bi-grid-1x2-fill icon-left"></i>
+            <span class="link-text">Dashboard Terminal</span>
+        </NavLink>
+
+        <NavLink class="nav-item-link" href="greeting">
+            <i class="bi bi-person-badge-fill icon-left"></i>
+            <span class="link-text">Personalization Hub</span>
+            <span class="badge bg-indigo ms-auto nav-pill-badge">App 01</span>
+        </NavLink>
+    </div>
+
+    <div class="sidebar-footer pt-3 mt-auto border-top border-secondary-subtle border-opacity-10">
+        <div class="d-flex align-items-center gap-3">
+            <div class="avatar-circle">
+                <i class="bi bi-person-fill text-white"></i>
+            </div>
+            <div class="overflow-hidden">
+                <p class="m-0 text-white fw-semibold small text-truncate">Emaan Rehman</p>
+                <small class="text-muted d-block font-monospace" style="font-size: 0.65rem;">ID: 247284-AU</small>
+            </div>
+        </div>
     </div>
 </div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+<style>
+    /* --- Premium Unique Sidebar Styling --- */
+    .premium-sidebar {
+        background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%);
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+    }
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+    .brand-icon-wrapper {
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        color: white;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
+    .text-indigo-soft {
+        color: #a5b4fc;
+    }
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="greeting">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Greeting
-            </NavLink>
-        </div>
-    </nav>
-</div>
+    .nav-item-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #94a3b8;
+        text-decoration: none;
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
+        .nav-item-link:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: #f8fafc;
+            transform: translateX(2px);
+        }
+
+        .nav-item-link.active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(79, 70, 229, 0.05) 100%);
+            color: #6366f1;
+            border-left: 3px solid #6366f1;
+            font-weight: 600;
+        }
+
+    .nav-pill-badge {
+        font-size: 0.65rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 6px;
+        background: rgba(99, 102, 241, 0.2);
+        color: #cbd5e1;
+    }
+
+    .avatar-circle {
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
