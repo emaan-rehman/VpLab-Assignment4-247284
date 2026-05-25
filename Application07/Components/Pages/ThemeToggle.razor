@@ -1,0 +1,64 @@
+﻿@inject IJSRuntime JSRuntime
+@rendermode InteractiveServer
+
+<div class="d-flex align-items-center gap-2">
+    <button class="btn btn-premium-primary px-3 py-2 d-flex align-items-center gap-2"
+            style="border-radius: 10px; font-size: 0.9rem;"
+            @onclick="ToggleThemeAsync">
+        @if (isDarkMode)
+        {
+            <span>☀️ Switch to Light Mode</span>
+        }
+        else
+        {
+            <span>🌙 Switch to Dark Mode</span>
+        }
+    </button>
+</div>
+
+@code {
+    private bool isDarkMode = false;
+
+    // Requirement: Load the theme configuration from localStorage on initial render completion
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                // Request the browser cache to see if a value has been set previously
+                var currentTheme = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "app-theme");
+
+                // Fallback to light theme defaults if nothing is cached yet
+                isDarkMode = (currentTheme == "dark");
+
+                // Apply layout configuration immediately
+                await ApplyThemeToDocumentAsync();
+                StateHasChanged();
+            }
+            catch
+            {
+                // Catch block protects against server prerendering initialization hiccups
+            }
+        }
+    }
+
+    private async Task ToggleThemeAsync()
+    {
+        isDarkMode = !isDarkMode;
+
+        // Requirement: Save selected state configuration to browser localStorage
+        string themeValue = isDarkMode ? "dark" : "light";
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "app-theme", themeValue);
+
+        // Execute document change styles step
+        await ApplyThemeToDocumentAsync();
+    }
+
+    private async Task ApplyThemeToDocumentAsync()
+    {
+        string themeValue = isDarkMode ? "dark" : "light";
+        // Target document element DOM nodes to set customized global theme attributes dynamically
+        await JSRuntime.InvokeVoidAsync("document.documentElement.setAttribute", "data-theme", themeValue);
+    }
+}
