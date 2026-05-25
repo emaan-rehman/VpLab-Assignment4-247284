@@ -73,13 +73,10 @@
             inputUsername = string.Empty;
         }
     }
-
     private void HandleLogout()
     {
         AuthState.LogOut();
     }
-
-    // Logic Enhancement: Key press processing logic
     private void HandleKeyPress(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
@@ -87,12 +84,10 @@
             HandleLogin();
         }
     }
-
     protected override void OnInitialized()
     {
         AuthState.OnStateChanged += StateHasChanged;
     }
-
     public void Dispose()
     {
         AuthState.OnStateChanged -= StateHasChanged;

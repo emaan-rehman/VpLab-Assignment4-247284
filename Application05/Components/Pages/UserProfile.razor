@@ -43,24 +43,16 @@
                 Go to Sign In
             </a>
         }
-
     </div>
 </div>
-
 @code {
-    // Logic Enhancement: Component allows full remote session destruction from anywhere
-    private void ForceLogout()
-    {
+    private void ForceLogout() {
         AuthState.LogOut();
     }
-
-    protected override void OnInitialized()
-    {
+    protected override void OnInitialized()  {
         AuthState.OnStateChanged += StateHasChanged;
     }
-
-    public void Dispose()
-    {
+    public void Dispose(){
         AuthState.OnStateChanged -= StateHasChanged;
     }
 }
