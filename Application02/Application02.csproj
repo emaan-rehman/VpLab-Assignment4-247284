@@ -4,7 +4,7 @@
 		<TargetFramework>net10.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<NuGetAudit>false</NuGetAudit>
+		<BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
 	</PropertyGroup>
 
 </Project>
