@@ -82,23 +82,16 @@
 </div>
 
 @code {
-    // Requirements Compliance: TWO-WAY bound data capture variable
     private string newTask = string.Empty;
-
-    // Requirements Compliance: ONE-WAY bound rendering loop context collection
     private List<string> tasks = new List<string>();
-
-    // Commits string payload to display array and flashes binding memory
     private void AddTask()
     {
         if (!string.IsNullOrWhiteSpace(newTask))
         {
             tasks.Add(newTask.Trim());
-            newTask = string.Empty; // Resets view layer state value via two-way update link
+            newTask = string.Empty; 
         }
     }
-
-    // Handles rapid capture when physical enter key is evaluated
     private void HandleKeyPress(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
@@ -106,14 +99,10 @@
             AddTask();
         }
     }
-
-    // Drops isolated data indices from execution cycle
     private void RemoveTask(string taskToRemove)
     {
         tasks.Remove(taskToRemove);
     }
-
-    // Requirements Compliance: Clear-all list logic hook
     private void ClearAllTasks()
     {
         tasks.Clear();

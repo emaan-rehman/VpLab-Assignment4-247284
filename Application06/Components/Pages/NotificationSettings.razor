@@ -1,9 +1,7 @@
 ﻿@page "/settings"
 @rendermode InteractiveServer
 @inject NotificationConfig Config
-
 <PageTitle>Settings - Application 06</PageTitle>
-
 <div class="container mt-5" style="max-width: 500px;">
     <div class="premium-card p-4 shadow-lg">
 
@@ -14,13 +12,11 @@
             </div>
             <span class="telemetry-badge">Config Engine</span>
         </div>
-
         <div class="mb-4 text-start">
             <label class="form-label text-muted small fw-bold text-uppercase tracking-wider">Default Display Limit</label>
             <input type="number" class="form-control form-premium text-main" min="1" max="10" @bind="Config.DefaultNumberOfNotifications" />
             <div class="form-text small text-muted">Defines default items generated per diagnostics fetch lifecycle loop.</div>
         </div>
-
         <div class="mb-4 text-start">
             <label class="form-label text-muted small fw-bold text-uppercase tracking-wider">Interface Display Layout</label>
             <select class="form-select form-premium text-main" @bind="Config.NotificationStyle">
@@ -28,12 +24,10 @@
                 <option value="Detailed">Detailed Mode (Full System Logs)</option>
             </select>
         </div>
-
         <div class="pt-2 border-top" style="border-color: var(--glass-border) !important;">
             <a href="/notifications" class="btn btn-premium-primary w-100 py-2 text-uppercase tracking-wider">
                 Apply & View Feed
             </a>
         </div>
-
     </div>
 </div>

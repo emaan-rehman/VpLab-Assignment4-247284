@@ -7,19 +7,13 @@ namespace Application06
     public class NotificationService
     {
         private readonly NotificationConfig _config;
-
-        // REQUIREMENT: Inject NotificationConfig into NotificationService via constructor
         public NotificationService(NotificationConfig config)
         {
             _config = config;
         }
-
         public async Task<List<NotificationItem>> GetNotificationsAsync(int? countOverride = null)
         {
-            // Simulate processing latency delay
             await Task.Delay(150);
-
-            // Logic: Fallback to global configuration values if user didn't specify an override
             int finalCount = countOverride ?? _config.DefaultNumberOfNotifications;
             if (finalCount < 1) finalCount = 1;
 
@@ -32,7 +26,6 @@ namespace Application06
                 "Server payload transmission throughput stabilized at optimal rates.",
                 "Environment operational parameters verified across active availability zones."
             };
-
             for (int i = 0; i < finalCount; i++)
             {
                 int index = i % topics.Length;
@@ -49,7 +42,6 @@ namespace Application06
             return list;
         }
     }
-
     public class NotificationItem
     {
         public int Id { get; set; }
