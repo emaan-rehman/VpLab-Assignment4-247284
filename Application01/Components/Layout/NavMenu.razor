@@ -1,13 +1,14 @@
 ﻿@rendermode InteractiveServer
 
 <div class="premium-sidebar d-flex flex-column h-100 p-4">
-    <div class="brand-container d-flex align-items-center gap-3 mb-5 pb-3">
-        <div class="brand-icon-wrapper">
-            <i class="bi bi-shield-shaded"></i>
+    <div class="brand-container d-flex align-items-center gap-3 mb-4 pb-3 border-bottom border-secondary-subtle border-opacity-10">
+        <div class="brand-logo-wrapper">
+            <div class="logo-ambient-glow"></div>
+            <i class="bi bi-activity logo-icon-spin"></i>
         </div>
-        <div>
-            <h5 class="m-0 fw-bold tracking-tight text-white">AU Portal</h5>
-            <small class="text-indigo-soft tracking-wider text-uppercase font-monospace" style="font-size: 0.65rem;">Core Engine v4.0</small>
+        <div class="brand-text-block">
+            <h5 class="m-0 brand-title">AU PORTAL</h5>
+            <span class="brand-subtitle font-monospace">CORE ENGINE V4.0</span>
         </div>
     </div>
 
@@ -36,73 +37,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    /* --- Premium Unique Sidebar Styling --- */
-    .premium-sidebar {
-        background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%);
-        border-right: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
-    }
-
-    .brand-icon-wrapper {
-        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-        color: white;
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-    }
-
-    .text-indigo-soft {
-        color: #a5b4fc;
-    }
-
-    .nav-item-link {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        color: #94a3b8;
-        text-decoration: none;
-        padding: 0.75rem 1rem;
-        border-radius: 10px;
-        font-weight: 500;
-        font-size: 0.9rem;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-        .nav-item-link:hover {
-            background: rgba(255, 255, 255, 0.04);
-            color: #f8fafc;
-            transform: translateX(2px);
-        }
-
-        .nav-item-link.active {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(79, 70, 229, 0.05) 100%);
-            color: #6366f1;
-            border-left: 3px solid #6366f1;
-            font-weight: 600;
-        }
-
-    .nav-pill-badge {
-        font-size: 0.65rem;
-        padding: 0.25rem 0.5rem;
-        border-radius: 6px;
-        background: rgba(99, 102, 241, 0.2);
-        color: #cbd5e1;
-    }
-
-    .avatar-circle {
-        width: 32px;
-        height: 32px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-</style>
