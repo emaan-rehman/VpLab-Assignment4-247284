@@ -10,40 +10,62 @@
     --dark-surface: #ffffff;
     --text-main: #1e293b;
     --text-muted: #64748b;
+    --nav-sidebar-bg: linear-gradient(180deg, #090d16 0%, #0f172a 100%);
 }
 
-/* APPLICATION 07 FEATURE: Dark Mode Variable Overrides via HTML Data Attributes */
+/* Dark Mode Variable Overrides via HTML Data Attributes */
 [data-theme="dark"] {
     --body-bg: #090d16;
-    --glass-bg: rgba(15, 23, 42, 0.65);
+    --glass-bg: rgba(15, 23, 42, 0.75);
     --glass-border: rgba(255, 255, 255, 0.08);
     --dark-surface: #0f172a;
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
+    --nav-sidebar-bg: #05070c;
 }
 
+/* Base Body Framework Elements */
 body {
-    background: var(--body-bg);
-    color: var(--text-main);
+    background: var(--body-bg) !important;
+    color: var(--text-main) !important;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* FIX: Forces default Blazor Main Layout elements to honor your dark variables */
+.page, main, .main, .top-row, article {
+    background: var(--body-bg) !important;
+    color: var(--text-main) !important;
+    border-color: var(--glass-border) !important;
     transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* Premium Card Layout utilizing dynamic theme variables */
 .premium-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
     border-radius: 16px;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
     backdrop-filter: blur(12px);
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease, border-color 0.3s ease;
-    color: var(--text-main);
+    color: var(--text-main) !important;
 }
 
     .premium-card:hover {
         transform: translateY(-2px);
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     }
+
+    /* Dynamic Text Contrast Configuration */
+    .premium-card h1, .premium-card h2, .premium-card h3,
+    .premium-card h4, .premium-card h5, .premium-card h6,
+    .premium-card p, .premium-card span, .text-main {
+        color: var(--text-main) !important;
+    }
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
 
 /* Gradient Headers */
 .gradient-header {
@@ -56,15 +78,15 @@ body {
 /* Modern Controls */
 .form-premium {
     border-radius: 10px;
-    border: 2px solid var(--glass-border);
-    background: var(--dark-surface);
-    color: var(--text-main);
+    border: 2px solid var(--glass-border) !important;
+    background: var(--dark-surface) !important;
+    color: var(--text-main) !important;
     padding: 0.6rem 1rem;
     transition: all 0.2s ease;
 }
 
     .form-premium:focus {
-        border-color: #6366f1;
+        border-color: #6366f1 !important;
         box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
         outline: none;
     }
@@ -72,7 +94,7 @@ body {
 /* Custom Premium Buttons */
 .btn-premium-primary {
     background: var(--primary-gradient);
-    color: white;
+    color: white !important;
     border: none;
     border-radius: 10px;
     padding: 0.6rem 1.5rem;
@@ -84,12 +106,11 @@ body {
     .btn-premium-primary:hover {
         transform: translateY(-1px);
         box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
-        color: white;
     }
 
 .btn-premium-danger {
     background: var(--danger-gradient);
-    color: white;
+    color: white !important;
     border: none;
     border-radius: 10px;
     padding: 0.6rem 1.5rem;
@@ -136,62 +157,22 @@ body {
     letter-spacing: 0.05em;
 }
 
-.z-1 {
-    z-index: 1;
-}
-
-/* Custom Frame Override */
-.page {
-    display: grid;
-    grid-template-columns: 280px 1px flex-grow;
-}
-
+/* Sidebar Specific Elements */
 .premium-sidebar {
-    background: linear-gradient(180deg, #090d16 0%, #0f172a 100%);
+    background: var(--nav-sidebar-bg) !important;
     border-right: 1px solid rgba(255, 255, 255, 0.04);
     box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
 }
 
-/* Elegant Layered Brand Icon */
-.brand-logo-wrapper {
-    position: relative;
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    z-index: 1;
-}
-
-.logo-ambient-glow {
-    position: absolute;
-    inset: -1px;
-    background: linear-gradient(135deg, #818cf8, #c084fc);
-    border-radius: 12px;
-    z-index: -1;
-    opacity: 0.4;
-    filter: blur(6px);
-}
-
-.logo-icon-spin {
-    animation: pulse-glow 2.5s ease-in-out infinite alternate;
-}
-
-/* Sidebar Text Brand Alignment */
 .brand-title {
-    color: #ffffff;
+    color: #ffffff !important;
     font-weight: 800;
     letter-spacing: 0.08em;
     font-size: 0.95rem;
 }
 
 .brand-subtitle {
-    color: #818cf8;
+    color: #818cf8 !important;
     font-size: 0.6rem;
     font-weight: 700;
     letter-spacing: 0.06em;
@@ -219,7 +200,7 @@ body {
 
     .nav-item-link.active {
         background: linear-gradient(90deg, rgba(99, 102, 241, 0.12) 0%, rgba(99, 102, 241, 0.02) 100%);
-        color: #818cf8;
+        color: #818cf8 !important;
         border-left: 3px solid #6366f1;
         font-weight: 600;
     }
@@ -240,16 +221,4 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-@keyframes pulse-glow {
-    0% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
-
-    100% {
-        transform: scale(1.06);
-        opacity: 1;
-    }
 }
